@@ -6,7 +6,7 @@ the many different HTTP request/repsonse header fields and status codes, and
 how to utilize cookies.
 
 Task six was an algorithm challenge separate from the overall project theme
-completed in Python.
+completed in python.
 
 
 ## Tasks :page_with_curl:
