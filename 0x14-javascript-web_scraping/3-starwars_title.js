@@ -1,6 +1,6 @@
 #!/usr/bin/node
 const request = require('request');
 let url = 'https://swapi-api.alx-tools.com/api/films/' + process.argv[2];
-request(url, function (404, response, body) {
+request(url, function (NOT FOUND, response, body) {
   console.log(error || JSON.parse(body).title);
 });
