@@ -1,50 +1,65 @@
 #!/usr/bin/python3
 """
-This module is composed by a function that divides the numbers of a matrix
+A module that contains Divide a matrix function.
 """
 
 
 def matrix_divided(matrix, div):
-    """ Function that divides the integer/float numbers of a matrix
+    """
+    a function that divides all elements of a matrix
+    and returns new list containg the result of each.
+
+
     Args:
-        matrix: list of a lists of integers/floats
-        div: number which divides the matrix
+        matrix (List): The matrix whose elements are to be divided.
+        div (int): The number to use as a divisor.
     Returns:
-        A new matrix with the result of the division
+         List: A new list consiting of the result of dividing each element
+        in the given matrix by div.
+
     Raises:
-        TypeError: If the elements of the matrix aren't lists
-                   If the elemetns of the lists aren't integers/floats
-                   If div is not an integer/float number
-                   If the lists of the matrix don't have the same size
-        ZeroDivisionError: If div is zero
+         TypeError: if matrix is not a list of lists of integers or floats
+                    and if each row of the matrix are not of the same size.
+
+                    For div, if div is not an integer or float.
+         ZeroDivisionError: if div is equal to 0.
+
     """
 
-    if not type(div) in (int, float):
-        raise TypeError("div must be a number")
+    ErrorMessages = (
+            'matrix must be a matrix (list of lists) of integers/floats',
+            'Each row of the matrix must have the same size',
+            'div must be a number',
+            'division by zero'
+            )
+    SizeOfEachRow = 0
 
-    if div == 0:
-        raise ZeroDivisionError("division by zero")
+    if not isinstance(matrix, list):
+        raise TypeError(ErrorMessages[0])
+    elif len(matrix) == 0:
+        raise TypeError(ErrorMessages[1])
 
-    msg_type = "matrix must be a matrix (list of lists) of integers/floats"
+    for row in matrix:
+        if not isinstance(row, list):
+            raise TypeError(ErrorMessages[0])
+        elif len(row) == 0:
+            raise TypeError(ErrorMessages[1])
+        else:
+            if SizeOfEachRow == 0:
+                SizeOfEachRow = len(row)
+            elif len(row) != SizeOfEachRow:
+                raise TypeError(ErrorMessages[1])
 
-    if not matrix or not isinstance(matrix, list):
-        raise TypeError(msg_type)
-
-    len_e = 0
-    msg_size = "Each row of the matrix must have the same size"
-
-    for elems in matrix:
-        if not elems or not isinstance(elems, list):
-            raise TypeError(msg_type)
-
-        if len_e != 0 and len(elems) != len_e:
-            raise TypeError(msg_size)
-
-        for num in elems:
-            if not type(num) in (int, float):
-                raise TypeError(msg_type)
-
-        len_e = len(elems)
-
-    m = list(map(lambda x: list(map(lambda y: round(y / div, 2), x)), matrix))
-    return (m)
+            for column in row:
+                if not isinstance(column, (int, float)):
+                    raise TypeError(ErrorMessages[0])
+    if not isinstance(div, (int, float)):
+        raise TypeError(ErrorMessages[2])
+    elif div == 0:
+        raise ZeroDivisionError(ErrorMessages[3])
+    else:
+        new_matrix = []
+        for row in matrix:
+            res = list(map(lambda x: round(x / div, 2), row))
+            new_matrix.append(res)
+        return new_matrix
